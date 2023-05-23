@@ -20,3 +20,15 @@ use App\Http\Controllers\Auth\LogoutController;
 Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class);
 Route::post('logout', LogoutController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('kendaraan', KendaraanController::class);
+    
+    Route::get('mobil', [KendaraanController::class, 'getAllMobil']);
+    Route::get('motor', [KendaraanController::class, 'getAllMotor']);
+
+    Route::get('motor/stock', [KendaraanController::class, 'getAllStockMotor']);
+    Route::get('mobil/stock', [KendaraanController::class, 'getAllStockMotor']);
+    Route::get('motor/sold', [KendaraanController::class, 'getAllSoldMotor']);
+    Route::get('mobil/sold', [KendaraanController::class, 'getAllSoldMobil']);
+});
