@@ -23,6 +23,10 @@ class RegisterController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return $user;
+        return response()->json([
+            'status' => 201,
+            'message' => 'Account registered',
+            'data' => $user
+        ], 201);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -14,10 +15,17 @@ class LoginController extends Controller
             'password' => ['required', 'min:5']
         ]);
 
-        if(!$token = auth()->attempt($request->only('email', 'password'))) {
-            return response()->json(['error' => 'Unauthorized'], 401);;
+        if($token = auth()->attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Login successfully',
+                'data' => compact('token')
+            ], 200);
         }
 
-        return response()->json(compact('token'));
+        return response()->json([
+            'status' => 401,
+            'error' => 'Unauthorized'
+        ], 401);
     }
 }

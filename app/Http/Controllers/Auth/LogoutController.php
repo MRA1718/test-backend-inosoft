@@ -10,6 +10,9 @@ class LogoutController extends Controller
     public function __invoke()
     {
         auth()->logout();
-        return response()->json('logout successfully');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Logout successfully'
+        ], 200);
     }
 }

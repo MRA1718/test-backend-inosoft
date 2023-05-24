@@ -23,7 +23,12 @@ class KendaraanController extends Controller
 
     public function index() {
         try{
-            return $this->KendaraanService->getAllKendaraan();
+            $data = $this->KendaraanService->getAllKendaraan();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan seluruh data kendaraan',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -34,10 +39,20 @@ class KendaraanController extends Controller
         try {
             if ($request->tipe_kendaraan == 'mobil') {
                 $dataTervalidasi = $this->MobilService->validator($request);
-                return $this->KendaraanService->store($dataTervalidasi);
+                $data = $this->KendaraanService->store($dataTervalidasi);
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Menyimpan data kendaraan mobil',
+                    'data' => $data
+                ], 201);
             } else {
                 $dataTervalidasi = $this->MotorService->validator($request);
-                return $this->KendaraanService->store($dataTervalidasi);
+                $data = $this->KendaraanService->store($dataTervalidasi);
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Menyimpan data kendaraan motor',
+                    'data' => $data
+                ], 201);
             }
         } catch (Exception $e) {
             return response()->json($e->getMessage());
@@ -47,18 +62,33 @@ class KendaraanController extends Controller
     //Menampilkan data kendaraan
     public function show(Kendaraan $kendaraan) {
         try {
-            return $this->KendaraanService->findById($kendaraan);
+            $data = $this->KendaraanService->findById($kendaraan);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Menampilkan data kendaraan',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
     }
 
-    //Memperbaharui data kendaraan
+    //Memperbarui data kendaraan
     public function update(Request $request, $id)
     {
         try {
-            $dataTervalidasi = $this->MobilService->validator($request);
-            return $this->KendaraanService->update($dataTervalidasi, $id);
+            if ($request->tipe_kendaraan == 'mobil') {
+                $dataTervalidasi = $this->MobilService->validator($request);
+                $data = $this->KendaraanService->update($dataTervalidasi, $id);
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Memperbarui data kendaraan',
+                    'data' => $data
+                ], 200);
+            } else {
+                $dataTervalidasi = $this->MotorService->validator($request);
+                $data = $this->KendaraanService->update($dataTervalidasi, $id);
+            }
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -67,7 +97,12 @@ class KendaraanController extends Controller
     //Menghapus data kendaraan
     public function destroy(Kendaraan $kendaraan) {
         try {
-            return $this->KendaraanService->deleteById($kendaraan);
+            $data = $this->KendaraanService->deleteById($kendaraan);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Menghapus data kendaraan',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -76,7 +111,12 @@ class KendaraanController extends Controller
     //Mendapatkan semua data mobil
     public function getAllMobil() {
         try {
-            return  $this->KendaraanService->getAllMobil();
+            $data = $this->KendaraanService->getAllMobil();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data mobil',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -85,7 +125,12 @@ class KendaraanController extends Controller
     //Mendapatkan data stok mobil
     public function getAllStockMotbil() {
         try {
-            return  $this->KendaraanService->getAllStockMobil();
+            $data = $this->KendaraanService->getAllStockMobil();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data stok mobil',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -94,7 +139,12 @@ class KendaraanController extends Controller
     //Mmendapatkan data mobil terjual
     public function getAllSoldMobil() {
         try {
-            return  $this->KendaraanService->getAllSoldMobil();
+            $data = $this->KendaraanService->getAllSoldMobil();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data mobil terjual',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -103,7 +153,12 @@ class KendaraanController extends Controller
     //Mendapatkan semua data motor
     public function getAllMotor() {
         try {
-            return  $this->KendaraanService->getAllMotor();
+            $data = $this->KendaraanService->getAllMotor();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data motor',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -112,7 +167,12 @@ class KendaraanController extends Controller
     //Mendapatkan data stok motor
     public function getAllStockMotor() {
         try {
-            return  $this->KendaraanService->getAllStockMotor();
+            $data = $this->KendaraanService->getAllStockMotor();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data stok motor',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -121,7 +181,12 @@ class KendaraanController extends Controller
     //Mendapatkan data motor terjual
     public function getAllSoldMotor() {
         try {
-            return  $this->KendaraanService->getAllSoldMotor();
+            $data = $this->KendaraanService->getAllSoldMotor();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Mendapatkan data motor terjual',
+                'data' => $data
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
